@@ -33,9 +33,9 @@ public class IterativeRobot {
      *
      */
 
-    private static IterativeRobot instance;
+    protected static IterativeRobot instance;
 
-    private IterativeRobot(){
+    protected IterativeRobot(){
         robotInit();
     }
 
@@ -55,7 +55,7 @@ public class IterativeRobot {
      * It should be called exactly one time from the constructor
      *
      */
-    private void robotInit(){
+    public void robotInit(){
         System.out.println("Default robotPeriodic() method... Override me!");
     }
 
