@@ -55,7 +55,7 @@ public class IterativeRobot {
      * It should be called exactly one time from the constructor
      *
      */
-    public void robotInit(){
+    protected void robotInit(){
         System.out.println("Default robotPeriodic() method... Override me!");
     }
 

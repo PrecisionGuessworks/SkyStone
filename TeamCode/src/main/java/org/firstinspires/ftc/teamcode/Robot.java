@@ -5,7 +5,7 @@ import lib.wpilibj2.IterativeRobot;
 public class Robot extends IterativeRobot {
 
     @Override
-    public void robotInit(){
+    protected void robotInit(){
 
     }
 
