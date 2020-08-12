@@ -4,9 +4,13 @@ import lib.wpilibj2.IterativeRobot;
 
 public class Robot extends IterativeRobot {
 
+    RobotContainer m_robotContainer;
+
     @Override
     protected void robotInit(){
-
+        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+        // autonomous chooser on the dashboard.
+        m_robotContainer = new RobotContainer();
     }
 
     @Override
