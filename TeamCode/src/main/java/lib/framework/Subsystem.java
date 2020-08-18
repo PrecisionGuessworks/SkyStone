@@ -1,3 +1,6 @@
+package lib.framework;
+
+
 
 /**
  * A robot subsystem.  Subsystems are the basic unit of robot organization in the Command-based
@@ -11,10 +14,9 @@
  * <p>Subsystems must be registered with the scheduler with the
  * {@link CommandScheduler#registerSubsystem(Subsystem...)} method in order for the
  * {@link Subsystem#periodic()} method to be called.  It is recommended that this method be called
- * from the constructor of users' Subsystem implementations.  The {@link SubsystemBase}
- * class offers a simple base for user implementations that handles this.
+ * from the constructor of users' Subsystem implementations.
  */
-public interface Subsystem {
+public abstract class Subsystem {
 
     /**
      * This method is called periodically by the {@link CommandScheduler}.  Useful for updating
@@ -22,15 +24,16 @@ public interface Subsystem {
      * try to be consistent within their own codebases about which responsibilities will be handled
      * by Commands, and which will be handled here.
      */
-    default void periodic() {
-    }
+    abstract void periodic();
 
     /**
      * This method is called periodically by the {@link CommandScheduler}.  Useful for updating
      * subsystem-specific state that needs to be maintained for simulations, such as for updating
-     * {@link edu.wpi.first.wpilibj.simulation} classes and setting simulated sensor readings.
+     * simulation classes and setting simulated sensor readings.
+     *
+     * Not Currently Implemented
      */
-    default void simulationPeriodic() {
+    public void simulationPeriodic() {
     }
 
     /**
@@ -42,7 +45,7 @@ public interface Subsystem {
      *
      * @param defaultCommand the default command to associate with this subsystem
      */
-    default void setDefaultCommand(Command defaultCommand) {
+    public void setDefaultCommand(Command defaultCommand) {
         CommandScheduler.getInstance().setDefaultCommand(this, defaultCommand);
     }
 
@@ -52,7 +55,7 @@ public interface Subsystem {
      *
      * @return the default command associated with this subsystem
      */
-    default Command getDefaultCommand() {
+    public Command getDefaultCommand() {
         return CommandScheduler.getInstance().getDefaultCommand(this);
     }
 
@@ -62,7 +65,7 @@ public interface Subsystem {
      *
      * @return the scheduled command currently requiring this subsystem
      */
-    default Command getCurrentCommand() {
+    public Command getCurrentCommand() {
         return CommandScheduler.getInstance().requiring(this);
     }
 
@@ -70,7 +73,7 @@ public interface Subsystem {
      * Registers this subsystem with the {@link CommandScheduler}, allowing its
      * {@link Subsystem#periodic()} method to be called when the scheduler runs.
      */
-    default void register() {
+    public void register() {
         CommandScheduler.getInstance().registerSubsystem(this);
     }
 }

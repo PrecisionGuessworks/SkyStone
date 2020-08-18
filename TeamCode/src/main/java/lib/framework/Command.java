@@ -1,3 +1,5 @@
+package lib.framework;
+
 import java.util.Set;
 import java.util.function.BooleanSupplier;
 
@@ -26,8 +28,6 @@ public abstract class Command {
      * The action to take when the command ends.  Called when either the command finishes normally,
      * or when it interrupted/canceled.
      *
-     * <p>Do not schedule commands here that share requirements with this command.
-     * Use {@link #andThen(Command...)} instead.
      *
      * @param interrupted whether the command was interrupted/canceled
      */
@@ -52,7 +52,7 @@ public abstract class Command {
      *
      * @return the set of subsystems that are required
      */
-    Set<Subsystem> getRequirements();
+    abstract Set<Subsystem> getRequirements();
 
     //Todo: Add Command Decorators
 
@@ -94,9 +94,7 @@ public abstract class Command {
 
     /**
      * Whether the command requires a given subsystem.  Named "hasRequirement" rather than "requires"
-     * to avoid confusion with
-     * {@link edu.wpi.first.wpilibj.command.Command#requires(edu.wpi.first.wpilibj.command.Subsystem)}
-     * - this may be able to be changed in a few years.
+     * to avoid confusion with other classes
      *
      * @param requirement the subsystem to inquire about
      * @return whether the subsystem is required

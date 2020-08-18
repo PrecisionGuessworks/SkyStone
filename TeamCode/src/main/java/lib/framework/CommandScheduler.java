@@ -1,3 +1,7 @@
+package lib.framework;
+
+
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -30,7 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
  * Subsystem#periodic()} methods to be called and for their default commands to be scheduled.
  */
 @SuppressWarnings({"PMD.GodClass", "PMD.TooManyMethods", "PMD.TooManyFields"})
-public final class CommandScheduler implements Sendable, AutoCloseable {
+public final class CommandScheduler{
     /**
      * The Singleton Instance.
      */

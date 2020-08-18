@@ -1,4 +1,4 @@
-package lib.wpilibj2;
+package lib.framework;
 
 public class IterativeRobot {
 
