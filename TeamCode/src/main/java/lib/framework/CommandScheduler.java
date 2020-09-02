@@ -349,7 +349,9 @@ public final class CommandScheduler{
      * @param subsystems the subsystem to un-register
      */
     public void unregisterSubsystem(Subsystem... subsystems) {
-        m_subsystems.keySet().removeAll(Set.of(subsystems));
+        for(Subsystem subsystem: subsystems){
+            m_subsystems.keySet().remove(subsystem);
+        }
     }
 
     /**
@@ -396,7 +398,9 @@ public final class CommandScheduler{
      */
     public void cancel(Command... commands) {
         if (m_inRunLoop) {
-            m_toCancel.addAll(List.of(commands));
+            for(Command command:commands) {
+                m_toCancel.add(command);
+            }
             return;
         }
 
@@ -453,7 +457,12 @@ public final class CommandScheduler{
      * @return whether the command is currently scheduled
      */
     public boolean isScheduled(Command... commands) {
-        return m_scheduledCommands.keySet().containsAll(Set.of(commands));
+        for(Command command: commands){
+            if(!m_scheduledCommands.keySet().contains(command)){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
