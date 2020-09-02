@@ -14,10 +14,9 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 
-import edu.wpi.first.networktables.NetworkTableEntry;
+
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.TimedRobot;
 //import edu.wpi.first.wpilibj.Watchdog;
 
@@ -514,40 +513,5 @@ public final class CommandScheduler{
         m_finishActions.add(action);
     }
 
-    @Override
-    public void initSendable(SendableBuilder builder) {
-        builder.setSmartDashboardType("Scheduler");
-        final NetworkTableEntry namesEntry = builder.getEntry("Names");
-        final NetworkTableEntry idsEntry = builder.getEntry("Ids");
-        final NetworkTableEntry cancelEntry = builder.getEntry("Cancel");
-        builder.setUpdateTable(() -> {
 
-            if (namesEntry == null || idsEntry == null || cancelEntry == null) {
-                return;
-            }
-
-            Map<Double, Command> ids = new LinkedHashMap<>();
-
-
-            for (Command command : m_scheduledCommands.keySet()) {
-                ids.put((double) command.hashCode(), command);
-            }
-
-            double[] toCancel = cancelEntry.getDoubleArray(new double[0]);
-            if (toCancel.length > 0) {
-                for (double hash : toCancel) {
-                    cancel(ids.get(hash));
-                    ids.remove(hash);
-                }
-                cancelEntry.setDoubleArray(new double[0]);
-            }
-
-            List<String> names = new ArrayList<>();
-
-            ids.values().forEach(command -> names.add(command.getName()));
-
-            namesEntry.setStringArray(names.toArray(new String[0]));
-            idsEntry.setNumberArray(ids.keySet().toArray(new Double[0]));
-        });
-    }
 }
