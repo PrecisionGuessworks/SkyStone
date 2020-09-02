@@ -81,7 +81,9 @@ public final class CommandScheduler{
     private final Map<Command, Boolean> m_toSchedule = new LinkedHashMap<>();
     private final List<Command> m_toCancel = new ArrayList<>();
 
-    private final Watchdog m_watchdog = new Watchdog(TimedRobot.kDefaultPeriod, () -> { });
+    //Todo: Determine in the WatchDog should be used, or some other variant like the FTC Heartbeat
+    //Commenting out all watchdog features until later use.
+    //private final Watchdog m_watchdog = new Watchdog(TimedRobot.kDefaultPeriod, () -> { });
 
     CommandScheduler() {
         HAL.report(tResourceType.kResourceType_Command, tInstances.kCommand2_Scheduler);
@@ -102,7 +104,8 @@ public final class CommandScheduler{
      * @param period Period in seconds.
      */
     public void setPeriod(double period) {
-        m_watchdog.setTimeout(period);
+
+        //m_watchdog.setTimeout(period);
     }
 
     @Override
@@ -146,7 +149,7 @@ public final class CommandScheduler{
             action.accept(command);
         }
 
-        m_watchdog.addEpoch(command.getName() + ".initialize()");
+        //m_watchdog.addEpoch(command.getName() + ".initialize()");
     }
 
     /**
@@ -244,7 +247,7 @@ public final class CommandScheduler{
         if (m_disabled) {
             return;
         }
-        m_watchdog.reset();
+        //m_watchdog.reset();
 
         //Run the periodic method of all registered subsystems.
         for (Subsystem subsystem : m_subsystems.keySet()) {
@@ -252,14 +255,14 @@ public final class CommandScheduler{
             if (RobotBase.isSimulation()) {
                 subsystem.simulationPeriodic();
             }
-            m_watchdog.addEpoch(subsystem.getClass().getSimpleName() + ".periodic()");
+            //m_watchdog.addEpoch(subsystem.getClass().getSimpleName() + ".periodic()");
         }
 
         //Poll buttons for new commands to add.
         for (Runnable button : m_buttons) {
             button.run();
         }
-        m_watchdog.addEpoch("buttons.run()");
+        //m_watchdog.addEpoch("buttons.run()");
 
         m_inRunLoop = true;
         //Run scheduled commands, remove finished commands.
@@ -274,7 +277,7 @@ public final class CommandScheduler{
                 }
                 m_requirements.keySet().removeAll(command.getRequirements());
                 iterator.remove();
-                m_watchdog.addEpoch(command.getName() + ".end(true)");
+                //m_watchdog.addEpoch(command.getName() + ".end(true)");
                 continue;
             }
 
@@ -282,7 +285,7 @@ public final class CommandScheduler{
             for (Consumer<Command> action : m_executeActions) {
                 action.accept(command);
             }
-            m_watchdog.addEpoch(command.getName() + ".execute()");
+            //m_watchdog.addEpoch(command.getName() + ".execute()");
             if (command.isFinished()) {
                 command.end(false);
                 for (Consumer<Command> action : m_finishActions) {
@@ -291,7 +294,7 @@ public final class CommandScheduler{
                 iterator.remove();
 
                 m_requirements.keySet().removeAll(command.getRequirements());
-                m_watchdog.addEpoch(command.getName() + ".end(false)");
+               //m_watchdog.addEpoch(command.getName() + ".end(false)");
             }
         }
         m_inRunLoop = false;
@@ -316,11 +319,12 @@ public final class CommandScheduler{
             }
         }
 
-        m_watchdog.disable();
+        //m_watchdog.disable();
+        /*
         if (m_watchdog.isExpired()) {
             System.out.println("CommandScheduler loop overrun");
             m_watchdog.printEpochs();
-        }
+        }*/
     }
 
     /**
@@ -406,7 +410,7 @@ public final class CommandScheduler{
             }
             m_scheduledCommands.remove(command);
             m_requirements.keySet().removeAll(command.getRequirements());
-            m_watchdog.addEpoch(command.getName() + ".end(true)");
+            //m_watchdog.addEpoch(command.getName() + ".end(true)");
         }
     }
 
