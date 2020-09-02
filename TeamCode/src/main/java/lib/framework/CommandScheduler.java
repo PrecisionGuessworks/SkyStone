@@ -13,16 +13,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import edu.wpi.first.hal.FRCNetComm.tInstances;
-import edu.wpi.first.hal.FRCNetComm.tResourceType;
-import edu.wpi.first.hal.HAL;
+
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Watchdog;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+//import edu.wpi.first.wpilibj.Watchdog;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
 
@@ -86,15 +84,6 @@ public final class CommandScheduler{
     //private final Watchdog m_watchdog = new Watchdog(TimedRobot.kDefaultPeriod, () -> { });
 
     CommandScheduler() {
-        HAL.report(tResourceType.kResourceType_Command, tInstances.kCommand2_Scheduler);
-        SendableRegistry.addLW(this, "Scheduler");
-        LiveWindow.setEnabledListener(() -> {
-            disable();
-            cancelAll();
-        });
-        LiveWindow.setDisabledListener(() -> {
-            enable();
-        });
     }
 
     /**
@@ -108,12 +97,7 @@ public final class CommandScheduler{
         //m_watchdog.setTimeout(period);
     }
 
-    @Override
-    public void close() {
-        SendableRegistry.remove(this);
-        LiveWindow.setEnabledListener(null);
-        LiveWindow.setDisabledListener(null);
-    }
+
 
     /**
      * Adds a button binding to the scheduler, which will be polled to schedule commands.
