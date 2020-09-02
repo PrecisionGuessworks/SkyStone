@@ -68,10 +68,12 @@ public final class CommandScheduler{
     private boolean m_disabled;
 
     //Lists of user-supplied actions to be executed on scheduling events for every command.
-    private final List<Consumer<Command>> m_initActions = new ArrayList<>();
-    private final List<Consumer<Command>> m_executeActions = new ArrayList<>();
-    private final List<Consumer<Command>> m_interruptActions = new ArrayList<>();
-    private final List<Consumer<Command>> m_finishActions = new ArrayList<>();
+    //Fixme: Consumers currently not supported in current android studio build, try to find a work around
+    //Uncomment the below and the accept functions below
+    //private final List<Consumer<Command>> m_initActions = new ArrayList<>();
+    //private final List<Consumer<Command>> m_executeActions = new ArrayList<>();
+    //private final List<Consumer<Command>> m_interruptActions = new ArrayList<>();
+    //private final List<Consumer<Command>> m_finishActions = new ArrayList<>();
 
     // Flag and queues for avoiding ConcurrentModificationException if commands are
     // scheduled/canceled during run
@@ -129,9 +131,12 @@ public final class CommandScheduler{
         for (Subsystem requirement : requirements) {
             m_requirements.put(requirement, command);
         }
+        /*
         for (Consumer<Command> action : m_initActions) {
             action.accept(command);
         }
+
+        */
 
         //m_watchdog.addEpoch(command.getName() + ".initialize()");
     }
@@ -256,9 +261,12 @@ public final class CommandScheduler{
 
             if (!command.runsWhenDisabled() && RobotState.isDisabled()) {
                 command.end(true);
+                /*
                 for (Consumer<Command> action : m_interruptActions) {
                     action.accept(command);
                 }
+
+                 */
                 m_requirements.keySet().removeAll(command.getRequirements());
                 iterator.remove();
                 //m_watchdog.addEpoch(command.getName() + ".end(true)");
@@ -266,15 +274,21 @@ public final class CommandScheduler{
             }
 
             command.execute();
+            /*
             for (Consumer<Command> action : m_executeActions) {
                 action.accept(command);
             }
+
+             */
             //m_watchdog.addEpoch(command.getName() + ".execute()");
             if (command.isFinished()) {
                 command.end(false);
+                /*
                 for (Consumer<Command> action : m_finishActions) {
                     action.accept(command);
                 }
+
+                 */
                 iterator.remove();
 
                 m_requirements.keySet().removeAll(command.getRequirements());
@@ -389,9 +403,12 @@ public final class CommandScheduler{
             }
 
             command.end(true);
+            /*
             for (Consumer<Command> action : m_interruptActions) {
                 action.accept(command);
             }
+
+             */
             m_scheduledCommands.remove(command);
             m_requirements.keySet().removeAll(command.getRequirements());
             //m_watchdog.addEpoch(command.getName() + ".end(true)");
