@@ -1,5 +1,7 @@
 package lib.framework;
 
+import java.util.Calendar;
+
 /**
  * Class that holds scheduling state for a command.  Used internally by the
  * {@link CommandScheduler}.
@@ -13,16 +15,17 @@ class CommandState {
 
     CommandState(boolean interruptible) {
         m_interruptible = interruptible;
-        //startTiming();
+        startTiming();
         startRunning();
     }
 
-    /* Removed until replacement found
-    Todo: find a replacement for Timer.getFPGTimestamp
+
+
     private void startTiming() {
-        m_startTime = Timer.getFPGATimestamp();
+        //Todo: Test to make sure this is accurate
+        m_startTime = Calendar.getInstance().getTimeInMillis();
     }
-    */
+
 
 
     synchronized void startRunning() {
@@ -33,10 +36,11 @@ class CommandState {
         return m_interruptible;
     }
 
-    /*Removed until replacement found
+
     double timeSinceInitialized() {
-        return m_startTime != -1 ? Timer.getFPGATimestamp() - m_startTime : -1;
+        return m_startTime != -1 ? Calendar.getInstance().getTimeInMillis() - m_startTime : -1;
+
     }
 
-     */
+
 }
