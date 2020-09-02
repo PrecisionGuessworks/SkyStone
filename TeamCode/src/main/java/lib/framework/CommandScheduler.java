@@ -83,6 +83,8 @@ public final class CommandScheduler{
     //Commenting out all watchdog features until later use.
     //private final Watchdog m_watchdog = new Watchdog(TimedRobot.kDefaultPeriod, () -> { });
 
+    //Todo: Implement CommandGroupBase class and uncomment all instances of it below.
+
     CommandScheduler() {
     }
 
@@ -155,10 +157,13 @@ public final class CommandScheduler{
             return;
         }
 
+        /*
         if (CommandGroupBase.getGroupedCommands().contains(command)) {
             throw new IllegalArgumentException(
                     "A command that is part of a command group cannot be independently scheduled");
         }
+
+         */
 
         //Do nothing if the scheduler is disabled, the robot is disabled and the command doesn't
         //run when disabled, or the command is already scheduled.
