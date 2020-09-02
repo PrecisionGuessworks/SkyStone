@@ -481,41 +481,55 @@ public final class CommandScheduler{
         m_disabled = false;
     }
 
+
+
     /**
      * Adds an action to perform on the initialization of any command by the scheduler.
      *
      * @param action the action to perform
      */
+    /*
     public void onCommandInitialize(Consumer<Command> action) {
         m_initActions.add(action);
     }
+
+     */
 
     /**
      * Adds an action to perform on the execution of any command by the scheduler.
      *
      * @param action the action to perform
      */
+    /*
     public void onCommandExecute(Consumer<Command> action) {
         m_executeActions.add(action);
     }
+
+     */
 
     /**
      * Adds an action to perform on the interruption of any command by the scheduler.
      *
      * @param action the action to perform
      */
+    /*
     public void onCommandInterrupt(Consumer<Command> action) {
         m_interruptActions.add(action);
     }
+
+     */
 
     /**
      * Adds an action to perform on the finishing of any command by the scheduler.
      *
      * @param action the action to perform
      */
+    /*
     public void onCommandFinish(Consumer<Command> action) {
         m_finishActions.add(action);
     }
+
+     */
 
 
 }
