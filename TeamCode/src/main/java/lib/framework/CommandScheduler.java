@@ -244,9 +244,12 @@ public final class CommandScheduler{
         //Run the periodic method of all registered subsystems.
         for (Subsystem subsystem : m_subsystems.keySet()) {
             subsystem.periodic();
+            /*
             if (RobotBase.isSimulation()) {
                 subsystem.simulationPeriodic();
             }
+
+             */
             //m_watchdog.addEpoch(subsystem.getClass().getSimpleName() + ".periodic()");
         }
 
