@@ -85,6 +85,8 @@ public final class CommandScheduler{
 
     //Todo: Implement CommandGroupBase class and uncomment all instances of it below.
 
+    //Todo: Implement Robotstate by getting the FtcControllerSerivce from the FtcControllerActivity
+
     CommandScheduler() {
     }
 
@@ -167,8 +169,9 @@ public final class CommandScheduler{
 
         //Do nothing if the scheduler is disabled, the robot is disabled and the command doesn't
         //run when disabled, or the command is already scheduled.
-        if (m_disabled || (RobotState.isDisabled() && !command.runsWhenDisabled())
-                || m_scheduledCommands.containsKey(command)) {
+        //if (m_disabled || (RobotState.isDisabled() && !command.runsWhenDisabled())
+        //        || m_scheduledCommands.containsKey(command)) {
+        if (m_disabled || m_scheduledCommands.containsKey(command)) {
             return;
         }
 
@@ -265,7 +268,8 @@ public final class CommandScheduler{
              iterator.hasNext(); ) {
             Command command = iterator.next();
 
-            if (!command.runsWhenDisabled() && RobotState.isDisabled()) {
+            //if (!command.runsWhenDisabled() && RobotState.isDisabled()) {
+            if (!command.runsWhenDisabled()) {
                 command.end(true);
                 /*
                 for (Consumer<Command> action : m_interruptActions) {
